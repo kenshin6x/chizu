@@ -25,7 +25,7 @@ class MainWindow(QtGui.QMainWindow):
         self.toolbar()
 
         # create init widget
-        self.setCentralWidget(IndexWidget())
+        self.setCentralWidget(HomeWidget())
 
         # display window
         self.show()
@@ -57,22 +57,32 @@ class MainWindow(QtGui.QMainWindow):
         exitAction.setStatusTip('Quit Chizu')
         exitAction.triggered.connect(QtGui.qApp.quit)
 
+        homeAction = QtGui.QAction(QtGui.QIcon(
+            settings.ICON_TOOLBAR_HOME), '&Home', self)
+        homeAction.setShortcut('Super+I')
+        homeAction.setStatusTip('Index')
+        homeAction.triggered.connect(self.setHomeWidget)
+
         playersAction = QtGui.QAction(QtGui.QIcon(
-            settings.ICON_TOOLBAR_PLAYER), '&Players', self)
+            settings.ICON_TOOLBAR_PLAYERS), '&Players', self)
         playersAction.setShortcut('Super+Q')
         playersAction.setStatusTip('Players')
-        playersAction.triggered.connect(self.addPlayersWidget)
+        playersAction.triggered.connect(self.setPlayersWidget)
 
         # create toolbar and define actions
         self.toolbar = self.addToolBar('Toolbar')
         self.toolbar.setFloatable(False)
 
-        self.toolbar.addAction(exitAction)
-        self.toolbar.addSeparator()
+        self.toolbar.addAction(homeAction)
         self.toolbar.addAction(playersAction)
+        self.toolbar.addSeparator()
+        self.toolbar.addAction(exitAction)
 
     def menubar(self):
         pass
 
-    def addPlayersWidget(self):
+    def setHomeWidget(self):
+        self.setCentralWidget(HomeWidget())
+
+    def setPlayersWidget(self):
         self.setCentralWidget(PlayersWidget())

@@ -2,10 +2,10 @@ from PyQt4 import QtGui, QtCore
 from chizu import settings
 
 
-class IndexWidget(QtGui.QWidget):
+class HomeWidget(QtGui.QWidget):
 
     def __init__(self):
-        super(IndexWidget, self).__init__()
+        super(HomeWidget, self).__init__()
         self.initUI()
 
     def initUI(self):

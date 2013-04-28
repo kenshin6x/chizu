@@ -21,4 +21,5 @@ ICON_APP = DIR_ICONS.child('%s.png' % APP_NAME)
 
 # icons : menubar
 ICON_TOOLBAR_EXIT = DIR_ICONS_TOOLBAR.child('exit.png')
-ICON_TOOLBAR_PLAYER = DIR_ICONS_TOOLBAR.child('player.png')
+ICON_TOOLBAR_HOME = DIR_ICONS_TOOLBAR.child('home.png')
+ICON_TOOLBAR_PLAYERS = DIR_ICONS_TOOLBAR.child('players.png')
