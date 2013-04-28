@@ -55,14 +55,17 @@ class MainWindow(QtGui.QMainWindow):
         exitAction.setStatusTip('Quit Chizu')
         exitAction.triggered.connect(QtGui.qApp.quit)
 
-        playersAction = QtGui.QAction(QtGui.QIcon(settings.ICON_TOOLBAR_PLAYER), '&Exit', self)
+        playersAction = QtGui.QAction(QtGui.QIcon(settings.ICON_TOOLBAR_PLAYER), '&Players', self)
         playersAction.setShortcut('Super+Q')
         playersAction.setStatusTip('Players')
         playersAction.triggered.connect(self.addPlayersWidget)
 
         # create toolbar and define actions
-        self.toolbar = self.addToolBar('Exit')
+        self.toolbar = self.addToolBar('Toolbar')
+        self.toolbar.setFloatable(False)
+        
         self.toolbar.addAction(exitAction)
+        self.toolbar.addSeparator()
         self.toolbar.addAction(playersAction)
 
     def menubar(self):
