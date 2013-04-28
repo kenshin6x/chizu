@@ -1,13 +1,15 @@
 from PyQt4 import QtGui, QtCore
 from chizu import settings
 
+from chizu.view.main_widgets import *
+
 class MainWindow(QtGui.QMainWindow):
     
     def __init__(self):
         super(MainWindow, self).__init__()
-        self.ui()
+        self.initUI()
 
-    def ui(self):
+    def initUI(self):
         # base properties
         self.setGeometry(600, 400, 600, 400)
         self.setWindowTitle(settings.APP_NAME_DISPLAY)
@@ -20,6 +22,9 @@ class MainWindow(QtGui.QMainWindow):
         # create menubar and toolbar
         self.menubar()
         self.toolbar()
+        
+        # create init widget
+        self.setCentralWidget(IndexWidget())
 
         # display window
         self.show()
@@ -30,18 +35,18 @@ class MainWindow(QtGui.QMainWindow):
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
-    def closeEvent(self, event):
-        reply = QtGui.QMessageBox.question(self,
-            u'Quit',
-            u"You really want to quit?",
-            QtGui.QMessageBox.Yes,
-            QtGui.QMessageBox.No
-        )
-
-        if reply == QtGui.QMessageBox.Yes:
-            event.accept()
-        else:
-            event.ignore()
+    # def closeEvent(self, event):
+    #         reply = QtGui.QMessageBox.question(self,
+    #             u'Quit',
+    #             u"You really want to quit?",
+    #             QtGui.QMessageBox.Yes,
+    #             QtGui.QMessageBox.No
+    #         )
+    # 
+    #         if reply == QtGui.QMessageBox.Yes:
+    #             event.accept()
+    #         else:
+    #             event.ignore()
 
     def toolbar(self):
         # create toolbar actions
@@ -53,7 +58,7 @@ class MainWindow(QtGui.QMainWindow):
         playersAction = QtGui.QAction(QtGui.QIcon(settings.ICON_TOOLBAR_PLAYER), '&Exit', self)
         playersAction.setShortcut('Super+Q')
         playersAction.setStatusTip('Players')
-        playersAction.triggered.connect(QtGui.qApp.quit)
+        playersAction.triggered.connect(self.addPlayersWidget)
 
         # create toolbar and define actions
         self.toolbar = self.addToolBar('Exit')
@@ -61,4 +66,7 @@ class MainWindow(QtGui.QMainWindow):
         self.toolbar.addAction(playersAction)
 
     def menubar(self):
-        pass
+        pass  
+        
+    def addPlayersWidget(self):
+        self.setCentralWidget(PlayersWidget())
