@@ -5,6 +5,7 @@ from PyQt4 import QtGui
 
 from chizu.view import main_window
 
+
 def runApp():
     app = QtGui.QApplication(sys.argv)
     window = main_window.MainWindow()

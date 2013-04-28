@@ -3,8 +3,9 @@ from chizu import settings
 
 from chizu.view.main_widgets import *
 
+
 class MainWindow(QtGui.QMainWindow):
-    
+
     def __init__(self):
         super(MainWindow, self).__init__()
         self.initUI()
@@ -22,7 +23,7 @@ class MainWindow(QtGui.QMainWindow):
         # create menubar and toolbar
         self.menubar()
         self.toolbar()
-        
+
         # create init widget
         self.setCentralWidget(IndexWidget())
 
@@ -42,7 +43,7 @@ class MainWindow(QtGui.QMainWindow):
     #             QtGui.QMessageBox.Yes,
     #             QtGui.QMessageBox.No
     #         )
-    # 
+    #
     #         if reply == QtGui.QMessageBox.Yes:
     #             event.accept()
     #         else:
@@ -50,12 +51,14 @@ class MainWindow(QtGui.QMainWindow):
 
     def toolbar(self):
         # create toolbar actions
-        exitAction = QtGui.QAction(QtGui.QIcon(settings.ICON_TOOLBAR_EXIT), '&Exit', self)
+        exitAction = QtGui.QAction(QtGui.QIcon(
+            settings.ICON_TOOLBAR_EXIT), '&Exit', self)
         exitAction.setShortcut('Super+Q')
         exitAction.setStatusTip('Quit Chizu')
         exitAction.triggered.connect(QtGui.qApp.quit)
 
-        playersAction = QtGui.QAction(QtGui.QIcon(settings.ICON_TOOLBAR_PLAYER), '&Players', self)
+        playersAction = QtGui.QAction(QtGui.QIcon(
+            settings.ICON_TOOLBAR_PLAYER), '&Players', self)
         playersAction.setShortcut('Super+Q')
         playersAction.setStatusTip('Players')
         playersAction.triggered.connect(self.addPlayersWidget)
@@ -63,13 +66,13 @@ class MainWindow(QtGui.QMainWindow):
         # create toolbar and define actions
         self.toolbar = self.addToolBar('Toolbar')
         self.toolbar.setFloatable(False)
-        
+
         self.toolbar.addAction(exitAction)
         self.toolbar.addSeparator()
         self.toolbar.addAction(playersAction)
 
     def menubar(self):
-        pass  
-        
+        pass
+
     def addPlayersWidget(self):
         self.setCentralWidget(PlayersWidget())
