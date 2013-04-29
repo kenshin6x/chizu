@@ -1,9 +1,9 @@
 from PyQt4 import Qt, QtGui, QtCore
 from PyQt4.QtCore import Qt
+
 from chizu import settings
-
-from chizu.view.main_widgets import *
-
+from chizu.view.home_widget import HomeWidget
+from chizu.view.player_widget import PlayersWidget
 
 class MainWindow(QtGui.QMainWindow):
 
@@ -26,7 +26,7 @@ class MainWindow(QtGui.QMainWindow):
         self.toolbar()
 
         # create init widget
-        self.setCentralWidget(HomeWidget())
+        self.setCentralWidget(PlayersWidget())
 
         # display window
         self.show()
