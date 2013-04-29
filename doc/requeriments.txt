@@ -1,0 +1,4 @@
+python 2.6
+pyqt4
+unipath
+sqlalchemy
