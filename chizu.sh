@@ -1,2 +1,2 @@
-#! /usr/bin/env
+#! /bin/sh
 python chizu.py

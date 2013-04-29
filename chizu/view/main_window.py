@@ -1,4 +1,5 @@
-from PyQt4 import QtGui, QtCore
+from PyQt4 import Qt, QtGui, QtCore
+from PyQt4.QtCore import Qt
 from chizu import settings
 
 from chizu.view.main_widgets import *
@@ -17,8 +18,8 @@ class MainWindow(QtGui.QMainWindow):
         self.setWindowIcon(QtGui.QIcon(settings.ICON_APP))
         self.center()
 
-        # create statusbar
-        self.statusBar().showMessage(u'Ready')
+        # # create statusbar
+        # self.statusBar().showMessage(u'Ready')
 
         # create menubar and toolbar
         self.menubar()
@@ -69,14 +70,18 @@ class MainWindow(QtGui.QMainWindow):
         playersAction.setStatusTip('Players')
         playersAction.triggered.connect(self.setPlayersWidget)
 
-        # create toolbar and define actions
-        self.toolbar = self.addToolBar('Toolbar')
-        self.toolbar.setFloatable(False)
+        # create toolbar
+        toolbar = QtGui.QToolBar()
+        toolbar.setFloatable(False)
+        toolbar.setMovable(False)
 
-        self.toolbar.addAction(homeAction)
-        self.toolbar.addAction(playersAction)
-        self.toolbar.addSeparator()
-        self.toolbar.addAction(exitAction)
+        # set toolbar actions
+        toolbar.addAction(homeAction)
+        toolbar.addAction(playersAction)
+        toolbar.addSeparator()
+        toolbar.addAction(exitAction)
+
+        self.addToolBar(Qt.LeftToolBarArea, toolbar)
 
     def menubar(self):
         pass
