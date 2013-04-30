@@ -73,8 +73,8 @@ class MainWindow(QtGui.QMainWindow):
 
         # create menubar
 
-    def setPlayersWidget(self):
-        self.central_widget.setCurrentWidget(self.playersWidget)
-
     def setHomeWidget(self):
         self.central_widget.setCurrentWidget(self.homeWidget)
+
+    def setPlayersWidget(self):
+        self.central_widget.setCurrentWidget(self.playersWidget)

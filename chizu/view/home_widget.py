@@ -11,7 +11,10 @@ class HomeWidget(QtGui.QWidget):
         self.initUI()
 
     def initUI(self):
-        layout = QtGui.QHBoxLayout()
+        boxLayout = QtGui.QVBoxLayout()
 
-        self.button = QtGui.QPushButton('Login')
-        layout.addWidget(self.button)
+        button = QtGui.QPushButton('Login')
+
+        boxLayout.addWidget(button)
+
+        self.setLayout(boxLayout)
