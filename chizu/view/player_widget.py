@@ -2,25 +2,28 @@ from PyQt4 import Qt, QtGui, QtCore
 from PyQt4.QtCore import Qt
 
 from chizu import settings
-from chizu.model.player import *
+from chizu.controller import PlayerController
 
 
 class PlayersWidget(QtGui.QWidget):
 
     def __init__(self, parent=None):
         super(PlayersWidget, self).__init__(parent)
+
         self.initUI()
 
     def initUI(self):
         boxLayout = QtGui.QVBoxLayout()
-        boxLayout.addWidget(PlayersTableView())
+        boxLayout.addWidget(PlayersTableView(self))
         self.setLayout(boxLayout)
 
 
 class PlayersTableView(QtGui.QTableView):
 
-    def __init__(self):
-        super(PlayersTableView, self).__init__()
+    def __init__(self, parent=None):
+        super(PlayersTableView, self).__init__(parent)
+
+        self.playerController = PlayerController()
         self.initUI()
 
     def initUI(self):
@@ -29,8 +32,17 @@ class PlayersTableView(QtGui.QTableView):
 
         # set table model & data
         data = PlayersTableModel()
-        data.addPlayer(Player('Junior Andrade', 'kenshin6x'))
-        data.addPlayer(Player('Beatriz Almeida', 'beatriz_aaa'))
+
+
+        save = self.playerController.save("Junior Andrade", "kenshin6x")
+
+        players = self.playerController.getAll()
+
+        print players
+
+        if players:
+            for p in players:
+                data.addPlayer(p)
 
         self.setModel(data)
 
@@ -39,6 +51,7 @@ class PlayersTableModel(QtCore.QAbstractTableModel):
 
     def __init__(self):
         super(PlayersTableModel, self).__init__()
+
         self.headers = ['Name', 'Nickname']
         self.players = []
 
