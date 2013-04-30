@@ -4,7 +4,9 @@ from PyQt4.QtCore import Qt
 from chizu.lib import settings
 from chizu.lib.base.gui import BaseSlave
 
+from chizu.gui.dialogs.playerdialog import PlayerCreateDialog
 from chizu.domain.player import Player
+
 
 class PlayerListSlave(BaseSlave):
 
@@ -15,19 +17,15 @@ class PlayerListSlave(BaseSlave):
     def setupUi(self):
         super(PlayerListSlave, self).setupUi()
 
-        boxLayout = QtGui.QVBoxLayout()
-
         self.createPlayerButton = QtGui.QPushButton(u'New Player')
         self.createPlayerButton.clicked.connect(self.onCreatePlayerButtonClicked)
 
-        boxLayout.addWidget(PlayerTableView(self))
-        boxLayout.addWidget(self.createPlayerButton)
-
-        self.setLayout(boxLayout)
+        self.layout.addWidget(PlayerTableView(self))
+        self.layout.addWidget(self.createPlayerButton)
 
     def onCreatePlayerButtonClicked(self):
-        pass
-        #self.createPlayer = CreatePlayer(self)
+        self.playerCreateDialog = PlayerCreateDialog(self)
+
 
 
 class PlayerTableView(QtGui.QTableView):

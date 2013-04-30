@@ -4,24 +4,23 @@ from PyQt4.QtCore import Qt
 from chizu.lib import settings
 from chizu.lib.base.gui import BaseWindow
 
-from chizu.gui.slaves import playerslave
+from chizu.gui.slaves.playerslave import PlayerListSlave
 
 class Main(BaseWindow):
+
+    dimensions = [550, 600, 550, 600]
 
     def __init__(self, parent=None):
         super(Main, self).__init__(parent)
 
-        self.playerListSlave = playerslave.PlayerListSlave(self)
+        self.playerListSlave = PlayerListSlave(self)
 
         self.setupUi()
 
     def setupUi(self):
         super(Main, self).setupUi()
 
-        self.createActions()
-        self.createMenus()
-
-        # create
+        # home widget
         self.homeDetailSlave = QtGui.QWidget()
 
         # define all avaliabre widgets to main window
