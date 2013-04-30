@@ -1,44 +1,44 @@
 from PyQt4 import Qt, QtGui, QtCore
 from PyQt4.QtCore import Qt
 
-from chizu import settings
-from chizu.controller import PlayerController
+from chizu.lib import settings
+from chizu.lib.base.gui import BaseSlave
 
+from chizu.domain.player import Player
 
-class PlayersWidget(QtGui.QWidget):
+class PlayerListSlave(BaseSlave):
 
     def __init__(self, parent=None):
-        super(PlayersWidget, self).__init__(parent)
+        super(PlayerListSlave, self).__init__(parent)
+        self.setupUi()
 
-        self.initUI()
+    def setupUi(self):
+        super(PlayerListSlave, self).setupUi()
 
-    def initUI(self):
         boxLayout = QtGui.QVBoxLayout()
-        boxLayout.addWidget(PlayersTableView(self))
+
+        self.createPlayerButton = QtGui.QPushButton(u'New Player')
+        self.createPlayerButton.clicked.connect(self.onCreatePlayerButtonClicked)
+
+        boxLayout.addWidget(PlayerTableView(self))
+        boxLayout.addWidget(self.createPlayerButton)
+
         self.setLayout(boxLayout)
 
+    def onCreatePlayerButtonClicked(self):
+        pass
+        #self.createPlayer = CreatePlayer(self)
 
-class PlayersTableView(QtGui.QTableView):
+
+class PlayerTableView(QtGui.QTableView):
 
     def __init__(self, parent=None):
-        super(PlayersTableView, self).__init__(parent)
+        super(PlayerTableView, self).__init__(parent)
 
-        self.playerController = PlayerController()
-        self.initUI()
-
-    def initUI(self):
-        # maximize table headers to layout
         self.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
 
-        # set table model & data
-        data = PlayersTableModel()
-
-
-        save = self.playerController.save("Junior Andrade", "kenshin6x")
-
-        players = self.playerController.getAll()
-
-        print players
+        data = PlayerTableModel()
+        players = Player().fetchAll()
 
         if players:
             for p in players:
@@ -47,10 +47,10 @@ class PlayersTableView(QtGui.QTableView):
         self.setModel(data)
 
 
-class PlayersTableModel(QtCore.QAbstractTableModel):
+class PlayerTableModel(QtCore.QAbstractTableModel):
 
     def __init__(self):
-        super(PlayersTableModel, self).__init__()
+        super(PlayerTableModel, self).__init__()
 
         self.headers = ['Name', 'Nickname']
         self.players = []

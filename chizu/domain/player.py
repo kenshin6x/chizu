@@ -3,8 +3,7 @@ from sqlalchemy import Column, Date, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref
 
-engine = create_engine('sqlite:///chizu.db', echo=True)
-Base = declarative_base()
+from chizu.lib.base.domain import *
 
 
 class Player(Base):
@@ -14,9 +13,14 @@ class Player(Base):
     name = Column(String)
     nickname = Column(String)
 
-    def __init__(self, name, nickname):
-        self.name = name
-        self.nickname = nickname
+    def fetchAll(self):
+        return session.query(Player)
 
+    def fetchById(self, id):
+        return session.query(Player).filter(Player.id == id).first()
 
-Base.metadata.create_all(engine)
+    def create(self, name, nickname):
+        new_object = Player(name, nickname)
+
+        session.add(new_object)
+        session.commit()

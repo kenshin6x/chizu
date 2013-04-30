@@ -10,7 +10,7 @@ APP_AUTHOR_NAME = 'Junior Andrade'
 APP_AUTHOR_EMAIL = 'seisxis@gmail.com'
 
 # dirs
-DIR_APP = Path(__file__).parent
+DIR_APP = Path(__file__).parent.parent
 DIR_STATIC = DIR_APP.child('static')
 DIR_ICONS = DIR_STATIC.child('icons')
 DIR_ICONS_TOOLBAR = DIR_ICONS.child('toolbar')
