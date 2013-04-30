@@ -6,10 +6,12 @@ from chizu import settings
 
 class HomeWidget(QtGui.QWidget):
 
-    def __init__(self):
-        super(HomeWidget, self).__init__()
+    def __init__(self, parent=None):
+        super(HomeWidget, self).__init__(parent)
         self.initUI()
 
     def initUI(self):
-        print "TO NA INDEX!!!!!!"
-        self.show()
+        layout = QtGui.QHBoxLayout()
+
+        self.button = QtGui.QPushButton('Login')
+        layout.addWidget(self.button)

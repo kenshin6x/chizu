@@ -5,89 +5,76 @@ from chizu import settings
 from chizu.view.home_widget import HomeWidget
 from chizu.view.player_widget import PlayersWidget
 
+
 class MainWindow(QtGui.QMainWindow):
 
-    def __init__(self):
-        super(MainWindow, self).__init__()
+    def __init__(self, parent=None):
+        super(MainWindow, self).__init__(parent)
+
+        self.homeWidget = HomeWidget(self)
+        self.playersWidget = PlayersWidget(self)
+
         self.initUI()
 
     def initUI(self):
-        # base properties
         self.setGeometry(600, 400, 600, 400)
         self.setWindowTitle(settings.APP_NAME_DISPLAY)
         self.setWindowIcon(QtGui.QIcon(settings.ICON_APP))
-        self.center()
+        self.centerWindow()
 
-        # # create statusbar
-        # self.statusBar().showMessage(u'Ready')
+        self.createActions()
+        self.createMenus()
 
-        # create menubar and toolbar
-        self.menubar()
-        self.toolbar()
+        # create the central
+        self.central_widget = QtGui.QStackedWidget()
+        self.setCentralWidget(self.central_widget)
 
-        # create init widget
-        self.setCentralWidget(PlayersWidget())
+        # define all avaliabre widgets to main window
+        self.central_widget.addWidget(self.homeWidget)
+        self.central_widget.addWidget(self.playersWidget)
 
-        # display window
-        self.show()
+        # the initial widget to display
+        self.central_widget.setCurrentWidget(self.homeWidget)
 
-    def center(self):
+    def centerWindow(self):
         qr = self.frameGeometry()
         cp = QtGui.QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
-    # def closeEvent(self, event):
-    #         reply = QtGui.QMessageBox.question(self,
-    #             u'Quit',
-    #             u"You really want to quit?",
-    #             QtGui.QMessageBox.Yes,
-    #             QtGui.QMessageBox.No
-    #         )
-    #
-    #         if reply == QtGui.QMessageBox.Yes:
-    #             event.accept()
-    #         else:
-    #             event.ignore()
+    def createActions(self):
+        self.exitAction = QtGui.QAction(QtGui.QIcon(settings.ICON_TOOLBAR_EXIT), '&Exit', self)
+        self.exitAction.setShortcut('Super+Q')
+        self.exitAction.setStatusTip('Quit Chizu')
+        self.exitAction.triggered.connect(QtGui.qApp.quit)
 
-    def toolbar(self):
-        # create toolbar actions
-        exitAction = QtGui.QAction(QtGui.QIcon(
-            settings.ICON_TOOLBAR_EXIT), '&Exit', self)
-        exitAction.setShortcut('Super+Q')
-        exitAction.setStatusTip('Quit Chizu')
-        exitAction.triggered.connect(QtGui.qApp.quit)
+        self.homeAction = QtGui.QAction(QtGui.QIcon(settings.ICON_TOOLBAR_HOME), '&Home', self)
+        self.homeAction.setShortcut('Super+I')
+        self.homeAction.setStatusTip('Index')
+        self.homeAction.triggered.connect(self.setHomeWidget)
 
-        homeAction = QtGui.QAction(QtGui.QIcon(
-            settings.ICON_TOOLBAR_HOME), '&Home', self)
-        homeAction.setShortcut('Super+I')
-        homeAction.setStatusTip('Index')
-        homeAction.triggered.connect(self.setHomeWidget)
+        self.playersAction = QtGui.QAction(QtGui.QIcon(settings.ICON_TOOLBAR_PLAYERS), '&Players', self)
+        self.playersAction.setShortcut('Super+Q')
+        self.playersAction.setStatusTip('Players')
+        self.playersAction.triggered.connect(self.setPlayersWidget)
 
-        playersAction = QtGui.QAction(QtGui.QIcon(
-            settings.ICON_TOOLBAR_PLAYERS), '&Players', self)
-        playersAction.setShortcut('Super+Q')
-        playersAction.setStatusTip('Players')
-        playersAction.triggered.connect(self.setPlayersWidget)
-
+    def createMenus(self):
         # create toolbar
         toolbar = QtGui.QToolBar()
         toolbar.setFloatable(False)
         toolbar.setMovable(False)
 
-        # set toolbar actions
-        toolbar.addAction(homeAction)
-        toolbar.addAction(playersAction)
+        toolbar.addAction(self.homeAction)
+        toolbar.addAction(self.playersAction)
         toolbar.addSeparator()
-        toolbar.addAction(exitAction)
+        toolbar.addAction(self.exitAction)
 
         self.addToolBar(Qt.LeftToolBarArea, toolbar)
 
-    def menubar(self):
-        pass
-
-    def setHomeWidget(self):
-        self.setCentralWidget(HomeWidget())
+        # create menubar
 
     def setPlayersWidget(self):
-        self.setCentralWidget(PlayersWidget())
+        self.central_widget.setCurrentWidget(self.playersWidget)
+
+    def setHomeWidget(self):
+        self.central_widget.setCurrentWidget(self.homeWidget)

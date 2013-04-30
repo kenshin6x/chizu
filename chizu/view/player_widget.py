@@ -7,15 +7,14 @@ from chizu.model.player import *
 
 class PlayersWidget(QtGui.QWidget):
 
-    def __init__(self):
-        super(PlayersWidget, self).__init__()
+    def __init__(self, parent=None):
+        super(PlayersWidget, self).__init__(parent)
         self.initUI()
 
     def initUI(self):
         boxLayout = QtGui.QVBoxLayout()
         boxLayout.addWidget(PlayersTableView())
         self.setLayout(boxLayout)
-        self.show()
 
 
 class PlayersTableView(QtGui.QTableView):
