@@ -52,6 +52,7 @@ class BaseSlave(QtGui.QWidget):
 class BaseDialog(QtGui.QDialog):
 
     title = None
+    icon = settings.ICON_APP
     dimensions = [300, 300, 300, 300]
 
     def __init__(self, parent=None):
@@ -60,6 +61,7 @@ class BaseDialog(QtGui.QDialog):
     def setupUi(self):
         self.setGeometry(*self.dimensions)
         self.setWindowTitle(self.title)
+        self.setWindowIcon(QtGui.QIcon(self.icon))
         self.layout = QtGui.QVBoxLayout()
         self.setLayout(self.layout)
         self.show()
