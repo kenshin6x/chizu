@@ -13,14 +13,26 @@ class Player(Base):
     name = Column(String)
     nickname = Column(String)
 
-    def fetchAll(self):
+    def __init__(self, name, nickname):
+        self.name = name
+        self.nickname = nickname
+
+    @staticmethod
+    def fetchAll():
         return session.query(Player)
 
-    def fetchById(self, id):
+    @staticmethod
+    def fetchById(id):
         return session.query(Player).filter(Player.id == id).first()
 
-    def create(self, name, nickname):
-        new_object = Player(name, nickname)
+    def save(self):
+        session.add(self)
+        session.commit()
 
-        session.add(new_object)
+    def update(self):
+        session.update(self)
+        session.commit()
+
+    def delete(self):
+        session.delete(self)
         session.commit()

@@ -36,7 +36,7 @@ class PlayerTableView(QtGui.QTableView):
         self.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
 
         data = PlayerTableModel()
-        players = Player().fetchAll()
+        players = Player.fetchAll()
 
         if players:
             for p in players:
