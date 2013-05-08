@@ -1,5 +1,4 @@
 from distutils.core import setup
-from chizu import settings
 
 setup(name='Chizu',
       version='1.0',
